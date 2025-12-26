@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posture Correction Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            padding: 0;
+            color: #1B3448;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            background: transparent;
+            padding: 10px;
+            min-height: 100vh;
+        }
+
+        /* Input Page Styles - Mobile Optimized */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        #inputPage {
+            background: linear-gradient(135deg, #5B9FA4 0%, #1B3448 100%);
+            min-height: 100vh;
+            padding: 15px 10px 10px;
+        }
+
+        .input-page {
+            max-width: 100%;
+            margin: 0 auto;
+            background: transparent;
+            padding: 0;
+        }
+
+        .input-header {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-top-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-header img {
+            height: 35px;
+        }
+
+        .input-header h1 {
+            color: #1B3448;
+            font-size: 14px;
+            margin: 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            line-height: 1.3;
+        }
+
+        .input-header p {
+            color: #666;
+            font-size: 11px;
+            margin: 3px 0 0 0;
+        }
+
+        .header-client-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: #1B3448;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #5B9FA4;
+        }
+
+        .test-section {
+            margin-bottom: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .test-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1B3448;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #5B9FA4;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .measurement-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .measurement-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .measurement-field label {
+            font-size: 13px;
+            color: #1B3448;
+            font-weight: 600;
+        }
+
+        .input-color-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .measurement-field input,
+        .measurement-field select {
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 16px;
+            flex: 1;
+        }
+
+        .measurement-field input:focus,
+        .measurement-field select:focus {
+            outline: none;
+            border-color: #5B9FA4;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            opacity: 0.3;
+        }
+
+        .color-btn.green {
+            background: #28a745;
+        }
+
+        .color-btn.green.selected {
+            opacity: 1;
+        }
+
+        .color-btn.red {
+            background: #dc3545;
+        }
+
+        .color-btn.red.selected {
+            opacity: 1;
+        }
+
+        .measurement-field.pelvic-tilt-row {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pelvic-input-row {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .pelvic-input-row input {
+            width: 155px;
+            flex: 0 0 155px;
+        }
+
+        .pelvic-input-row select {
+            flex: 0 0 90px;
+            width: 90px;
+            min-width: 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #5B9FA4 0%, #1B3448 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 3px 10px rgba(27, 52, 72, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Display Page - Mobile Optimized */
+        .header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #5B9FA4;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .client-info h1 {
+            color: #1B3448;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .client-info p {
+            color: #5B9FA4;
+            font-size: 12px;
+        }
+
+        .header-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px 0;
+        }
+
+        .header-buttons .btn-secondary,
+        .header-buttons .btn-primary {
+            width: 100%;
+        }
+
+        .date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .date label {
+            font-size: 11px;
+            color: #5B9FA4;
+            font-weight: 500;
+        }
+
+        .date-value {
+            font-size: 11px;
+            color: #5B9FA4;
+            font-weight: 500;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            border-left: 4px solid #5B9FA4;
+        }
+
+        .section-title {
+            color: #1B3448;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .section-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .exercises-block {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .block-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #5B9FA4;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #5B9FA4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sets-reps-container {
+            display: flex;
+            gap: 15px;
+            font-size: 11px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        thead {
+            background: #3d5a6d;
+            color: white;
+        }
+
+        th {
+            padding: 5px 3px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 10px;
+        }
+
+        td {
+            padding: 4px 3px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f0f8f9;
+        }
+
+        .exercise-name {
+            text-align: left !important;
+            font-size: 11px;
+            color: #1B3448;
+        }
+
+        .remarks {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .remark-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 11px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .remark-item:last-child {
+            border-bottom: none;
+        }
+        
+        .remark-item.last-visible {
+            border-bottom: none;
+        }
+
+        .remark-label {
+            font-weight: 500;
+            color: #1B3448;
+            flex: 1;
+        }
+
+        .remark-value {
+            color: #5B9FA4;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .abnormal {
+            color: #d9534f !important;
+        }
+
+        .normal {
+            color: #5cb85c !important;
+        }
+
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 10mm;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            #inputPage {
+                display: none !important;
+            }
+
+            #displayPage {
+                display: block !important;
+            }
+
+            .header-buttons {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            .content {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .header {
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+
+            table {
+                font-size: 9px;
+            }
+
+            .remark-item {
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- INPUT PAGE -->
+    <div id="inputPage" class="page active">
+        <div class="input-page">
+            <div class="input-header">
+                <div class="header-top-row">
+                    <div class="header-content">
+                        <img src="FIT_LOGO.png" alt="Logo">
+                        <div>
+                            <h1>Posture Assessment Form</h1>
+                            <p>Enter client info and measurements</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Client Information -->
+                <div class="header-client-inputs">
+                    <div class="input-group">
+                        <label for="clientName">Client Name</label>
+                        <input type="text" id="clientName" required placeholder="Enter client name">
+                    </div>
+                    <div class="input-group">
+                        <label for="assessmentDate">Assessment Date</label>
+                        <input type="date" id="assessmentDate" required>
+                    </div>
+                    <script>
+                        // Set today's date as default
+                        document.getElementById('assessmentDate').valueAsDate = new Date();
+                    </script>
+                </div>
+            </div>
+
+            <form id="assessmentForm">
+                <!-- STANDING FRONT -->
+                <div class="test-section">
+                    <div class="test-section-title">STANDING FRONT</div>
+                    <div class="measurement-inputs">
+                        <div class="measurement-field">
+                            <label>Left Shoulder Slope</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="leftShoulderSlope" placeholder="e.g., 19.2">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('leftShoulderSlope', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('leftShoulderSlope', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Right Shoulder Slope</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="rightShoulderSlope" placeholder="e.g., 23.0">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('rightShoulderSlope', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('rightShoulderSlope', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field pelvic-tilt-row">
+                            <label>Pelvic Tilt</label>
+                            <div class="input-color-row">
+                                <div class="pelvic-input-row">
+                                    <input type="number" step="0.1" id="pelvicTilt" placeholder="e.g., -0.4">
+                                    <select id="pelvicTiltSide">
+                                        <option value="">Select</option>
+                                        <option value="Left">Left</option>
+                                        <option value="Right">Right</option>
+                                    </select>
+                                </div>
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('pelvicTilt', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('pelvicTilt', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Left HKA Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="leftHKA" placeholder="e.g., -0.3">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('leftHKA', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('leftHKA', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Right HKA Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="rightHKA" placeholder="e.g., -0.2">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('rightHKA', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('rightHKA', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Coronal Balance</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="coronalBalance" placeholder="e.g., -0.1">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('coronalBalance', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('coronalBalance', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STANDING RIGHT -->
+                <div class="test-section">
+                    <div class="test-section-title">STANDING RIGHT</div>
+                    <div class="measurement-inputs">
+                        <div class="measurement-field">
+                            <label>Forward Head Posture Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="forwardHeadRight" placeholder="e.g., 32.4">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('forwardHeadRight', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('forwardHeadRight', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Rounded Shoulder Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="roundedShoulderRight" placeholder="e.g., 38.6">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('roundedShoulderRight', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('roundedShoulderRight', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>T1 Pelvic Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="t1PelvicRight" placeholder="e.g., 23.9">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('t1PelvicRight', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('t1PelvicRight', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Sagittal Vertical Axis</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="sagittalVerticalRight" placeholder="e.g., 1.2">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('sagittalVerticalRight', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('sagittalVerticalRight', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Thoracic Kyphosis Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="thoracicKyphosisRight" placeholder="e.g., 48.1">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('thoracicKyphosisRight', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('thoracicKyphosisRight', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Lumbar Lordosis Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="lumbarLordosisRight" placeholder="e.g., 57.7">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('lumbarLordosisRight', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('lumbarLordosisRight', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Anterior Pelvic Tilt Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="anteriorPelvicTiltRight" placeholder="e.g., 8.6">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('anteriorPelvicTiltRight', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('anteriorPelvicTiltRight', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Kendall Knee Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="kendallKneeRight" placeholder="e.g., 8.6">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('kendallKneeRight', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('kendallKneeRight', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STANDING LEFT -->
+                <div class="test-section">
+                    <div class="test-section-title">STANDING LEFT</div>
+                    <div class="measurement-inputs">
+                        <div class="measurement-field">
+                            <label>Forward Head Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="forwardHeadLeft" placeholder="e.g., 35.9">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('forwardHeadLeft', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('forwardHeadLeft', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Rounded Shoulder Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="forwardShoulderLeft" placeholder="e.g., 42.8">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('forwardShoulderLeft', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('forwardShoulderLeft', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>T1 Pelvic Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="t1PelvicLeft" placeholder="e.g., 30.7">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('t1PelvicLeft', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('t1PelvicLeft', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Sagittal Vertical Axis</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="sagittalVerticalLeft" placeholder="e.g., 3.5">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('sagittalVerticalLeft', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('sagittalVerticalLeft', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Thoracic Kyphosis</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="thoracicKyphosisLeft" placeholder="e.g., 46.1">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('thoracicKyphosisLeft', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('thoracicKyphosisLeft', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Lumbar Lordosis</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="lumbarLordosisLeft" placeholder="e.g., 55.7">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('lumbarLordosisLeft', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('lumbarLordosisLeft', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Anterior Pelvic Tilt Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="anteriorPelvicTiltLeft" placeholder="e.g., 8.1">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('anteriorPelvicTiltLeft', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('anteriorPelvicTiltLeft', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Kendall Knee Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="kendallKneeLeft" placeholder="e.g., 11.5">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('kendallKneeLeft', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('kendallKneeLeft', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BACK VIEW -->
+                <div class="test-section">
+                    <div class="test-section-title">BACK VIEW</div>
+                    <div class="measurement-inputs">
+                        <div class="measurement-field">
+                            <label>Knee Horizontal Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="kneeHorizontal" placeholder="e.g., -3.3">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('kneeHorizontal', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('kneeHorizontal', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OVERHEAD SQUAT -->
+                <div class="test-section">
+                    <div class="test-section-title">OVERHEAD SQUAT</div>
+                    <div class="measurement-inputs">
+                        <div class="measurement-field">
+                            <label>Shoulder Stability</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="shoulderStability" placeholder="e.g., 131.9">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('shoulderStability', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('shoulderStability', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Spinal Neutrality</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="spineNeutrality" placeholder="e.g., 59.0">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('spineNeutrality', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('spineNeutrality', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Squat Depth</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="squatDepth" placeholder="e.g., 52.2">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('squatDepth', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('squatDepth', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Pelvic Stability</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="pelvicStability" placeholder="e.g., 0.2">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('pelvicStability', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('pelvicStability', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOE TOUCH TEST -->
+                <div class="test-section">
+                    <div class="test-section-title">TOE TOUCH TEST</div>
+                    <div class="measurement-inputs">
+                        <div class="measurement-field">
+                            <label>Knee Extension Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="kneeExtension" placeholder="e.g., 177.5">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('kneeExtension', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('kneeExtension', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Hip Hinge Angle</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="hipHinge" placeholder="e.g., 83.1">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('hipHinge', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('hipHinge', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="measurement-field">
+                            <label>Finger to Floor</label>
+                            <div class="input-color-row">
+                                <input type="number" step="0.1" id="fingerToFloor" placeholder="e.g., 15.6">
+                                <div class="color-picker">
+                                    <button type="button" class="color-btn green" onclick="selectColor('fingerToFloor', 'normal', this)"></button>
+                                    <button type="button" class="color-btn red" onclick="selectColor('fingerToFloor', 'abnormal', this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Generate Form</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DISPLAY PAGE -->
+    <div id="displayPage" class="page display-page">
+        <div class="container">
+            <div class="header">
+                <div class="header-left">
+                    <img src="FIT_LOGO.png" alt="Logo" class="logo">
+                    <div class="client-info">
+                        <h1>Posture Correction Program</h1>
+                        <p id="displayName"></p>
+                        <div class="date">
+                            <label>Date:</label>
+                            <div class="date-value" id="displayDate"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <!-- All sections remain the same as desktop version, just styled for mobile -->
+                <!-- SHOULDER & NECK SECTION -->
+                <div class="section">
+                    <div class="section-title">Shoulder & Neck</div>
+                    <div class="section-content">
+                        <div class="exercises-block">
+                            <div class="block-title">
+                                <span>Exercises</span>
+                                <div class="sets-reps-container">
+                                    <span>Sets</span>
+                                    <span>Reps</span>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;">Name</th>
+                                        <th>L</th>
+                                        <th>R</th>
+                                        <th>L</th>
+                                        <th>R</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="exercise-name">Single hand shrugs</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>10</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Farmer walk</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>10</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Rowing Back Machine Single Hand</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Reverse flies DB</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Rowing Back DB</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Rowing Back Cable</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Reverse Flies Cable</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="remarks">
+                            <div class="block-title">Assessment Results</div>
+                            <div class="remark-item">
+                                <span class="remark-label">Left Shoulder Slope</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Right Shoulder Slope</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Forward Head Posture Angle (Right)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Rounded Shoulder Angle (Right)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Thoracic Kyphosis Angle (Right)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Forward Head Angle (Left)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Rounded Shoulder Angle (Left)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Thoracic Kyphosis Angle (Left)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Shoulder Stability</span>
+                                <span class="remark-value"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CORE SECTION -->
+                <div class="section">
+                    <div class="section-title">Core</div>
+                    <div class="section-content">
+                        <div class="exercises-block">
+                            <div class="block-title">
+                                <span>Exercises</span>
+                                <div class="sets-reps-container">
+                                    <span>Sets</span>
+                                    <span>Reps</span>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;">Name</th>
+                                        <th>L</th>
+                                        <th>R</th>
+                                        <th>L</th>
+                                        <th>R</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="exercise-name">Anterior pelvic tilt (Lying)</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Dead Bug</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Reverse crunches</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Half superman</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Lower back machine</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Bird dog</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="remarks">
+                            <div class="block-title">Assessment Results</div>
+                            <div class="remark-item">
+                                <span class="remark-label">Pelvic Tilt</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Lumbar Lordosis Angle (Right)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Anterior Pelvic Tilt Angle (Right)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Lumbar Lordosis Angle (Left)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Anterior Pelvic Tilt Angle (Left)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Pelvic Stability</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Spinal Neutrality</span>
+                                <span class="remark-value"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KNEE SECTION -->
+                <div class="section">
+                    <div class="section-title">Knee</div>
+                    <div class="section-content">
+                        <div class="exercises-block">
+                            <div class="block-title">
+                                <span>Exercises</span>
+                                <div class="sets-reps-container">
+                                    <span>Sets</span>
+                                    <span>Reps</span>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;">Name</th>
+                                        <th>L</th>
+                                        <th>R</th>
+                                        <th>L</th>
+                                        <th>R</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="exercise-name">Hamstring Curl Seated</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Hamstring Curl Lying</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Hamstring Curl Cable</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Single Leg Deadlift</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Single Leg Glute Bridge</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Cable Kick Back</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>15</td>
+                                        <td>15</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="remarks">
+                            <div class="block-title">Assessment Results</div>
+                            <div class="remark-item">
+                                <span class="remark-label">Left HKA Angle</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Right HKA Angle</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Knee Horizontal Angle</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Knee Extension Angle</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Kendall Knee Angle (Left)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Kendall Knee Angle (Right)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STRETCHING SECTION -->
+                <div class="section">
+                    <div class="section-title">Stretching</div>
+                    <div class="section-content">
+                        <div class="exercises-block">
+                            <div class="block-title">
+                                <span>Exercises</span>
+                                <div class="sets-reps-container">
+                                    <span>Sets</span>
+                                    <span>Duration</span>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;">Name</th>
+                                        <th>L</th>
+                                        <th>R</th>
+                                        <th>L</th>
+                                        <th>R</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="exercise-name">Hamstring Stretching</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>1 min</td>
+                                        <td>1 min</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Pigeon stretching</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>1 min</td>
+                                        <td>1 min</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Chest Stretching</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>1 min</td>
+                                        <td>1 min</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Child Pose</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>1 min</td>
+                                        <td>1 min</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="exercise-name">Hip flexors stretching</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>1 min</td>
+                                        <td>1 min</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="remarks">
+                            <div class="block-title">Assessment Results</div>
+                            <div class="remark-item">
+                                <span class="remark-label">T1 Pelvic Angle (Right)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Sagittal Vertical Axis (Right)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">T1 Pelvic Angle (Left)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Sagittal Vertical Axis (Left)</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Hip Hinge Angle</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Squat Depth</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Coronal Balance</span>
+                                <span class="remark-value"></span>
+                            </div>
+                            <div class="remark-item">
+                                <span class="remark-label">Finger to Floor</span>
+                                <span class="remark-value"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-buttons">
+                <button onclick="goBackToInput()" class="btn-secondary">Back To Edit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Close keyboard when tapping outside input fields
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('input, select, textarea')) {
+                document.activeElement.blur();
+            }
+        });
+
+        // Store color selections
+        const colorSelections = {};
+        
+        // Color selection function
+        function selectColor(fieldId, colorType, button) {
+            colorSelections[fieldId] = colorType;
+            const colorPicker = button.parentElement;
+            const buttons = colorPicker.querySelectorAll('.color-btn');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+        }
+        
+        // Form submission handler
+        document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const clientName = document.getElementById('clientName').value;
+            const assessmentDate = document.getElementById('assessmentDate').value;
+            
+            const date = new Date(assessmentDate);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            document.getElementById('displayName').textContent = `Client: ${clientName}`;
+            document.getElementById('displayDate').textContent = formattedDate;
+            
+            const pelvicTiltValue = document.getElementById('pelvicTilt').value;
+            const pelvicTiltSide = document.getElementById('pelvicTiltSide').value;
+            if (pelvicTiltValue && pelvicTiltSide) {
+                updateMeasurement('pelvicTilt', 'Pelvic Tilt', '°', '', pelvicTiltSide + ' ');
+            } else if (pelvicTiltValue && !pelvicTiltSide) {
+                updateMeasurement('pelvicTilt', 'Pelvic Tilt', '°', '', '');
+            } else {
+                const remarkItems = document.querySelectorAll('.remark-item');
+                remarkItems.forEach(item => {
+                    const labelElement = item.querySelector('.remark-label');
+                    if (labelElement && labelElement.textContent === 'Pelvic Tilt') {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            
+            updateMeasurement('coronalBalance', 'Coronal Balance', ' cm');
+            updateMeasurement('leftHKA', 'Left HKA Angle', '°');
+            updateMeasurement('rightHKA', 'Right HKA Angle', '°');
+            updateMeasurement('leftShoulderSlope', 'Left Shoulder Slope', '°');
+            updateMeasurement('rightShoulderSlope', 'Right Shoulder Slope', '°');
+            updateMeasurement('lumbarLordosisRight', 'Lumbar Lordosis Angle (Right)', '°');
+            updateMeasurement('anteriorPelvicTiltRight', 'Anterior Pelvic Tilt Angle (Right)', '°');
+            updateMeasurement('t1PelvicRight', 'T1 Pelvic Angle (Right)', '°');
+            updateMeasurement('sagittalVerticalRight', 'Sagittal Vertical Axis (Right)', ' cm');
+            updateMeasurement('forwardHeadRight', 'Forward Head Posture Angle (Right)', '°');
+            updateMeasurement('roundedShoulderRight', 'Rounded Shoulder Angle (Right)', '°');
+            updateMeasurement('thoracicKyphosisRight', 'Thoracic Kyphosis Angle (Right)', '°');
+            updateMeasurement('kendallKneeRight', 'Kendall Knee Angle (Right)', '°');
+            updateMeasurement('lumbarLordosisLeft', 'Lumbar Lordosis Angle (Left)', '°');
+            updateMeasurement('anteriorPelvicTiltLeft', 'Anterior Pelvic Tilt Angle (Left)', '°');
+            updateMeasurement('t1PelvicLeft', 'T1 Pelvic Angle (Left)', '°');
+            updateMeasurement('sagittalVerticalLeft', 'Sagittal Vertical Axis (Left)', ' cm');
+            updateMeasurement('forwardHeadLeft', 'Forward Head Angle (Left)', '°');
+            updateMeasurement('forwardShoulderLeft', 'Rounded Shoulder Angle (Left)', '°');
+            updateMeasurement('thoracicKyphosisLeft', 'Thoracic Kyphosis Angle (Left)', '°');
+            updateMeasurement('kendallKneeLeft', 'Kendall Knee Angle (Left)', '°');
+            updateMeasurement('kneeHorizontal', 'Knee Horizontal Angle', '°');
+            updateMeasurement('pelvicStability', 'Pelvic Stability', '°');
+            updateMeasurement('spineNeutrality', 'Spinal Neutrality', '°');
+            updateMeasurement('squatDepth', 'Squat Depth', '°');
+            updateMeasurement('shoulderStability', 'Shoulder Stability', '°');
+            updateMeasurement('hipHinge', 'Hip Hinge Angle', '°');
+            updateMeasurement('fingerToFloor', 'Finger to Floor', ' cm');
+            updateMeasurement('kneeExtension', 'Knee Extension Angle', '°');
+            
+            updateLastVisibleItems();
+            
+            document.getElementById('inputPage').classList.remove('active');
+            document.getElementById('displayPage').classList.add('active');
+            window.scrollTo(0, 0);
+        });
+        
+        function updateMeasurement(fieldId, label, unit, suffix = '', prefix = '') {
+            const value = document.getElementById(fieldId).value;
+            const color = colorSelections[fieldId] || 'normal';
+            
+            const remarkItems = document.querySelectorAll('.remark-item');
+            remarkItems.forEach(item => {
+                const labelElement = item.querySelector('.remark-label');
+                if (labelElement && labelElement.textContent === label) {
+                    if (value) {
+                        item.style.display = '';
+                        const valueElement = item.querySelector('.remark-value');
+                        valueElement.className = 'remark-value ' + color;
+                        valueElement.textContent = prefix + value + unit + (suffix ? ' ' + suffix : '');
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+        
+        function updateLastVisibleItems() {
+            const remarksSections = document.querySelectorAll('.remarks');
+            remarksSections.forEach(section => {
+                const items = section.querySelectorAll('.remark-item');
+                items.forEach(item => item.classList.remove('last-visible'));
+                let lastVisible = null;
+                items.forEach(item => {
+                    if (item.style.display !== 'none') {
+                        lastVisible = item;
+                    }
+                });
+                if (lastVisible) {
+                    lastVisible.classList.add('last-visible');
+                }
+            });
+        }
+        
+        function goBackToInput() {
+            document.getElementById('displayPage').classList.remove('active');
+            document.getElementById('inputPage').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        
+        function downloadPDF() {
+            const clientName = document.getElementById('clientName').value;
+            const fileName = clientName ? clientName.trim() : 'Posture Correction Program';
+            const originalTitle = document.title;
+            document.title = fileName;
+            
+            // Small delay to ensure rendering is complete on mobile
+            setTimeout(() => {
+                window.print();
+                setTimeout(() => {
+                    document.title = originalTitle;
+                }, 100);
+            }, 50);
+        }
+    </script>
+</body>
+</html>
